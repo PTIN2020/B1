@@ -22,6 +22,9 @@ Per a poder accedir al nostre colab, basta amb entrar al següent  enllaç.
 
 Per poder veure el codi i deixar algun comentari, s'ha d'entrar amb un compte .upc.edu, sinó haureu de demanar permís per a poder visualitzar el colab
 
+Per accedir al directori sencer del programa, on es poden observar tots els models i les imatges utilitzades per entrenar la AI, es pot accedir a partir d'aquest link
+https://drive.google.com/open?id=1IqzjCS8AEiey5jENz8-qxxwq4wWIJjlU
+
 
 #### [Detecció d'imatges en temps real](/real-time-object-detection)
 
