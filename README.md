@@ -6,10 +6,11 @@
 
 
 ## B1
+### Presentacions
+Per a veure els vídeos de cada Sprint, es pot accedir a través dels següents enllaços temporals:
 
-Per a veure el video accedir al link temporal:
-
-> https://tooctrler-my.sharepoint.com/:v :/g/personal/vip147741_vip365_pub/Ee7MJZj21wJCllLkcIVtImgBx5AELcI96PM0NKOhnc7yNw
+-[Sprint 0](https://drive.google.com/file/d/1I3HaUNk-dI72N8wBxyxqsY9aej0N_Ie2/view?usp=sharing)
+-[Sprint 1](https://drive.google.com/file/d/18OFlrjfemrvc5kyS37QCjnnfYOLF1qbl/view?usp=sharing)
 
 Tambe està disponible dintre del canal slack ***terminal 1***
 
