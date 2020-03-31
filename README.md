@@ -9,8 +9,8 @@
 ### Presentacions
 Per a veure els vídeos de cada Sprint, es pot accedir a través dels següents enllaços temporals:
 
--[Sprint 0](https://drive.google.com/file/d/1I3HaUNk-dI72N8wBxyxqsY9aej0N_Ie2/view?usp=sharing)
--[Sprint 1](https://drive.google.com/file/d/18OFlrjfemrvc5kyS37QCjnnfYOLF1qbl/view?usp=sharing)
+ - [Sprint 0](https://drive.google.com/file/d/1I3HaUNk-dI72N8wBxyxqsY9aej0N_Ie2/view?usp=sharing)
+ - [Sprint 1](https://drive.google.com/file/d/18OFlrjfemrvc5kyS37QCjnnfYOLF1qbl/view?usp=sharing)
 
 Tambe està disponible dintre del canal slack ***terminal 1***
 
