@@ -17,4 +17,6 @@ $ python real_time_object_detection.py
 ## Funcionament
 
 Un cop el programa és executat, es mostrarà una finestra amb els frames capturats per la teva webcam on es mostrarà amb un rectangle de color blau els objectes que a nostra AI  és capaç de reconeixer
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](/Videos/Frame 2020-03-29 12-25-40.mp4)
+
+Dintre de la carpeta videos, podreu observar un conjunt de mostres del seu funcionament
+[enter link description here](/Videos)
