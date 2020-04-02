@@ -27,5 +27,5 @@ Per accedir al directori sencer del programa, on es poden observar tots els mode
 > https://drive.google.com/open?id=1IqzjCS8AEiey5jENz8-qxxwq4wWIJjlU
 
 
-#### [Detecció d'imatges en temps real](/real-time-object-detection)
+### [Detecció d'imatges en temps real](/real-time-object-detection)
 
