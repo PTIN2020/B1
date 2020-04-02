@@ -1,22 +1,18 @@
-# Real Time Object Detection
-
-Intel·ligència artificial dedicada a la utilització i comprovació del funcionament del nostre model. El projecte captura imatges a través de la webcam del dispositiu i utilitza els frames obtinguts per analitzar i obtenir els resultats de cada una de les imatges obtingudes per la webcam.
-
+# Detección en tiempo real de objetos y codigos QR
+Captura de imágenes a partir de un video o de la webcam para procesarlas a través de nuestro modelo para detectar objetos y códigos QR, con el fin de poder detectar personas y objetos que están en el centro de la imagen y obtener información de los códigos QR leídos
 
 ## instal·lació
 
-Per a instal·lar tots els paquets necessaris, és tan simple com anar a la carpeta del programa i executar la següent  comanda.
+Para proceder a su instalación, sera necesario descargar el repositorio e instalar los paquetes enumerados en el documento requirements.txt
 ```console
+$ git clone https://github.com/ToniCifre/real-time-object-detection.git
+$ cd real-time-object-detection
 $ pip install -r requirements.txt
 ```
-Un com instal·lades tots els requeriments, és tan simple com executar els programa amb el Python 3.
-```console
-$ python real_time_object_detection.py
-```
+
 
 ## Funcionament
 
-Un cop el programa és executat, es mostrarà una finestra amb els frames capturats per la teva webcam on es mostrarà amb un rectangle de color blau els objectes que a nostra AI  és capaç de reconeixer
+El archivo `qr_object_detection.py`, es el encargado de ejecutar el reconocimiento de objetos juntamente con el de los códigos QR
 
-Dintre de la carpeta [videos](/real-time-object-detection/Videos), podreu observar un conjunt de mostres del seu funcionament
-
+Una vez el programa es ejecutado, se mostrará una ventana con los frames capturados por tu webcam donde se mostrará con un rectángulo de color azul los objetos que nuestra AI es capaz de reconocer y con un rectángulo de color rojo se mostrara se códigos QR que está detectando, además de la información que contienen encima del recuadro

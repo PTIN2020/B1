@@ -8,18 +8,20 @@ import cv2
 
 # Llegim el nostre model serielitzat
 print("[INFO] loading model...")
-net = cv2.dnn.readNetFromCaffe('Mode.prototxt.txt', 'Mode.caffemodel')
+net = cv2.dnn.readNetFromCaffe('Models/Mode.prototxt.txt', 'Models/Mode.caffemodel')
 
 
 # inicialitza la transmissió de vídeo i el comptador de FPS
 print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
+# vs = VideoStream(src=0).start()
+cam = cv2.VideoCapture(0)
 time.sleep(2.0)
-fps = FPS().start()
+# fps = FPS().start()
 
 while True:
 	# agafa el fotograma del flux de vídeo i modifiquem el tamany
-	frame = vs.read()
+	# frame = vs.read()
+	_, frame = cam.read()
 	frame = imutils.resize(frame, width=600)
 
 	# agafem les dimensions del marc i obtenim en un bloc
@@ -54,13 +56,14 @@ while True:
 		break
 
 	# actualitzar el comptador FPS
-	fps.update()
+	# fps.update()
 
 # atura el temporitzador i mostram alguna informació sobre els FPS
-fps.stop()
-print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
-print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+# fps.stop()
+# print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
+# print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
 # una mica de neteja
+cam.release()
 cv2.destroyAllWindows()
-vs.stop()
+# vs.stop()
