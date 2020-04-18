@@ -79,7 +79,7 @@ def chech_video_cv2(video=0):
     if (cap.isOpened() == False):
         print("[ERROR] Unable to read camera feed")
 
-    # out = cv2.VideoWriter('outpy.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (600, 337))
+    out = cv2.VideoWriter('outpy.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (600, 337))
 
     time.sleep(2.0)
 
@@ -89,10 +89,10 @@ def chech_video_cv2(video=0):
             frame = imutils.resize(frame, width=600)
 
             check_for_object(frame)
-            check_qr_code_pyzbar(frame)
+            # check_qr_code_pyzbar(frame)
 
             cv2.imshow("Frame", frame)
-            # out.write(frame)
+            out.write(frame)
 
             if cv2.waitKey(1) == ord("q"):
                 break
@@ -100,7 +100,7 @@ def chech_video_cv2(video=0):
             break
     # una mica de neteja
     cap.release()
-    # out.release()
+    out.release()
     print("[INFO] finished")
     cv2.destroyAllWindows()
 
@@ -111,5 +111,5 @@ net = cv2.dnn.readNetFromCaffe('Models/Mode.prototxt.txt', 'Models/Mode.caffemod
 print("[INFO] loading QR code detector...")
 qrDecoder = cv2.QRCodeDetector()
 
-chech_video_cv2(0)
+chech_video_cv2("Videos/proba8.mp4")
 # chech_video_cv2()
