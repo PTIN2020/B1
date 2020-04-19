@@ -1,9 +1,9 @@
 # Detección en tiempo real de objetos y codigos QR
-Captura de imágenes a partir de un video o de la webcam para procesarlas a través de nuestro modelo para detectar objetos y códigos QR, con el fin de poder detectar personas y objetos que están en el centro de la imagen y obtener información de los códigos QR leídos
+Captura d'imatges a partir d'un vídeo o de la càmera web per a processar-a través del nostre model per detectar objectes i codis QR, per tal de poder detectar persones i objectes que són al centre de la imatge i obtenir informació dels codis QR llegits
 
 ## instal·lació
 
-Para proceder a su instalación, sera necesario descargar el repositorio e instalar los paquetes enumerados en el documento requirements.txt
+Per procedir a la seva instal·lació, serà necessari descarregar el repositori i instal·lar els paquets enumerats en el document requirements.txt
 ```console
 $ git clone https://github.com/ToniCifre/real-time-object-detection.git
 $ cd real-time-object-detection
@@ -13,13 +13,13 @@ $ pip install -r requirements.txt
 
 ## Funcionament
 
-El archivo `qr_object_detection.py`, es el encargado de ejecutar el reconocimiento de objetos juntamente con el de los códigos QR a parir de la webcam del dispositivo.
+L'arxiu `qr_object_detection.py`, és l'encarregat d'executar el reconeixement d'objectes juntament amb el dels codis QR a parir de la càmera web de el dispositiu.
 
-Una vez el programa es ejecutado, se mostrará una ventana con los frames capturados por tu webcam donde se mostrará con un rectángulo de color azul los objetos que nuestra AI es capaz de reconocer y con un rectángulo de color rojo se mostrara se códigos QR que está detectando, además de la información que contienen encima del recuadro
+Un cop el programa és executat, es mostrarà una finestra amb els frames capturats per la teva webcam on es mostrarà amb un rectangle de color blau els objectes que la nostra AI és capaç de reconèixer i amb un rectangle de color vermell es mostrés es codis QR que està detectant, a més de la informació que contenen sobre de l'requadre
 
-Para ver una muestra de como funciona, podéis observar los siguientes resultados:
- - [Prueba de reconocimiento de codigos QR y clientes](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes-y-QR.avi)
- - [Prueba de reconocimiento de clientes](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes.mp4)
- - [Prueba de reconocimiento de clientes y objetos](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes-y-objetos.mp4)
+Per veure una mostra de com funciona, podeu observar els següents resultats:
+ - [Prova de reconeixement de codis QR i clients](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes-y-QR.avi)
+ - [Prova de reconeixement de clients](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes.mp4)
+ - [Prova de reconeixement de clients i objectes](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes-y-objetos.mp4)
 
-Estos programas en python aun están siendo depurados, de tal manera que no es fácil de usar y comprobar por partes externas.
+Aquests programes en Python encara estan sent depurats, de manera que no és fàcil d'usar i comprovar per parts externes.

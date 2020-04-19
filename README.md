@@ -29,3 +29,5 @@ Per accedir al directori sencer del programa, on es poden observar tots els mode
 
 ### [Detecció d'imatges en temps real](/real-time-object-detection)
 
+### [Posicionament per WIFI](/wifi-Triangulation)
+
