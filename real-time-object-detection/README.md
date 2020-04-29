@@ -18,8 +18,8 @@ L'arxiu `qr_object_detection.py`, és l'encarregat d'executar el reconeixement d
 Un cop el programa és executat, es mostrarà una finestra amb els frames capturats per la teva webcam on es mostrarà amb un rectangle de color blau els objectes que la nostra AI és capaç de reconèixer i amb un rectangle de color vermell es mostrés es codis QR que està detectant, a més de la informació que contenen sobre de l'requadre
 
 Per veure una mostra de com funciona, podeu observar els següents resultats:
- - [Prova de reconeixement de codis QR i clients](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes-y-QR.avi)
- - [Prova de reconeixement de clients](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes.mp4)
- - [Prova de reconeixement de clients i objectes](/real-time-object-detection/Videos/resultats/Deteccion-de-clientes-y-objetos.mp4)
+ - [Prova de reconeixement de codis QR i clients](/real-time-object-detection/videos/resultats/Deteccion-de-clientes-y-QR.avi)
+ - [Prova de reconeixement de clients](/real-time-object-detection/videos/resultats/Deteccion-de-clientes.mp4)
+ - [Prova de reconeixement de clients i objectes](/real-time-object-detection/videos/resultats/Deteccion-de-clientes-y-objetos.mp4)
 
 Aquests programes en Python encara estan sent depurats, de manera que no és fàcil d'usar i comprovar per parts externes.
