@@ -5,11 +5,11 @@ import time
 
 CarVision().start()
 print("eee")
-
-
-socket = Client()
-
-socket.update_position(231, 312)
-time.sleep(5)
-
-socket.disconnect()
+#
+#
+# socket = Client()
+#
+# socket.update_position(231, 312)
+# time.sleep(5)
+#
+# socket.disconnect()

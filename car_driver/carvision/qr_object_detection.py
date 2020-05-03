@@ -55,11 +55,14 @@ class CarVision(Thread):
                 box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                 (startX, startY, endX, endY) = box.astype("int")
 
-                if (endY - startY) / h > 0.8 or (endX - startX) / w > 0.8:
+                if endY / h > 0.6 and (startX / w < 0.8 and endX / w > 0.2):
                     color = (0, 0, 255)
+                elif endY / h > 0.4:
+                    color = (0, 255, 255)
                 else:
                     color = (255, 0, 0)
-                cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+                if (endY - startY) / h < 0.9 and (endX - startX) / w < 0.9:
+                    cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
     def check_qr_code_pyzbar(self, frame):
         codes = pyzbar.decode(frame)
