@@ -23,12 +23,12 @@ Un cop el programa és executat, en aquesta versió de mostra, es mostrarà una 
 Per altra banda, també s'encarregarà de cercar codis QR per tal d'identificar les parades i així reforçarà el posicionament.
 Un com es rebi una notificació per a anar a una parada en concret, el cotxe utilitzarà la ubicació per arribar fins a l'aturada, però per quedar-se exactament en el seu lloc cercarà el codi QR de l'aturada i un cop el trobi enviarà la notificació al client informant que ja ha arribat
 
-![Deterrió de proximitat](/carvision/videos/resultats/Sensor_de_proximitat.gif)
+![Deterrió de proximitat](/car_driver/carvision/videos/resultats/Sensor_de_proximitat.gif)
 
 Per veure algunes mostres del funcionament i la seva evolució, podeu observar els següents vídeos:
- - [Prova de reconeixement de codis QR i clients](/real-time-object-detection/videos/resultats/Deteccion-de-clientes-y-QR.avi)
- - [Prova de reconeixement de clients](/real-time-object-detection/videos/resultats/Deteccion-de-clientes.mp4)
- - [Prova de reconeixement de clients i objectes](/real-time-object-detection/videos/resultats/Deteccion-de-clientes-y-objetos.mp4)
+ - [Prova de reconeixement de codis QR i clients](/car_driver/carvision/videos/resultats/Deteccion-de-clientes-y-QR.avi)
+ - [Prova de reconeixement de clients](/car_driver/carvision/videos/resultats/Deteccion-de-clientes.mp4)
+ - [Prova de reconeixement de clients i objectes](/car_driver/carvision/videos/resultats/Deteccion-de-clientes-y-objetos.mp4)
 
 
 
