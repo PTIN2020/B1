@@ -1,23 +1,29 @@
 import socketio
+
+
 # pip install "python-socketio[asyncio_client]"
 
-class Client():
-
-    def __init__(self):
-        self.isConnected = False
+class Client:
 
     try:
         sio = socketio.Client()
         sio.connect('http://localhost:3003')
-        sio.emit('id', '123654')
     except socketio.exceptions.ConnectionError:
         print('[ERROR] Server is off')
+
+    def __init__(self):
+        self.isConnected = False
+        self.id = '654456'
+        self.sio.emit('id', self.id)
 
     def update_position(self, lat, lon):
         self.sio.emit('position', (str(lat), str(lon)))
 
     def update_status(self, status):
         self.sio.emit('status', status)
+
+    def send_notification(self, notify):
+        self.sio.emit('notification', notify)
 
     def send(self, key, msg):
         self.sio.emit(key, msg)
@@ -42,9 +48,14 @@ def bad_status(data):
 
 
 @Client.sio.event
+def bad_notify(data):
+    print('[ERROR] Bad notify:', data)
+
+
+@Client.sio.event
 def connect():
     socket.isConnected = True
-    socket.send('id', '123654')
+    socket.send('id', socket.id)
     print("[INFO] Connected!")
 
 
@@ -57,3 +68,6 @@ def connect_error():
 def disconnect():
     socket.isConnected = False
     print("[INFO] Disconnected!")
+
+
+socket = Client()

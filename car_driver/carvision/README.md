@@ -19,11 +19,12 @@ Un cop el programa és executat, en aquesta versió de mostra, es mostrarà una 
 - Blau: El cotxe seguirà la linneà amb normalitat.
 - Groc: S'enviarà una senyal al controlador del cotxe per a disminuir la velocitat.
 - Vermell: El cotxe s'aturarà fins nova senyal
+![Deterrió de proximitat](/car_driver/carvision/videos/resultats/Sensor_de_proximitat.gif)
 
 Per altra banda, també s'encarregarà de cercar codis QR per tal d'identificar les parades i així reforçarà el posicionament.
 Un com es rebi una notificació per a anar a una parada en concret, el cotxe utilitzarà la ubicació per arribar fins a l'aturada, però per quedar-se exactament en el seu lloc cercarà el codi QR de l'aturada i un cop el trobi enviarà la notificació al client informant que ja ha arribat
+![Deterrió de proximitat](/car_driver/carvision/videos/resultats/sensor_aturades.gif)
 
-![Deterrió de proximitat](/car_driver/carvision/videos/resultats/Sensor_de_proximitat.gif)
 
 Per veure algunes mostres del funcionament i la seva evolució, podeu observar els següents vídeos:
  - [Prova de reconeixement de codis QR i clients](/car_driver/carvision/videos/resultats/Deteccion-de-clientes-y-QR.avi)
