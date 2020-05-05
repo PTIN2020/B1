@@ -1,19 +1,29 @@
 from carvision.qr_object_detection import CarVision
-import time
-import random
+from wifitriangulation.wifi_triangulation import WifiTriangulation
+from driverconnection.arduino_connector import ArduinoConnector
 
-c = CarVision()
-c.start()
-print("eee")
+# QT_X11_NO_MITSHM=1 python main.py
+
+wifi_module = WifiTriangulation("wlx00c0ca665094")
+wifi_module.start()
+
+arduino_module = ArduinoConnector()
+
+vision_module = CarVision(arduino_module)
+vision_module.start()
+
 stop = 0
-while stop < 300:
-    print(c.stat)
-    print(c.code)
-    stop += 1
-    time.sleep(0.1)
-c.stop()
-c.join()
-print("dfaskjdhfkasdgfahsdfhadskfh")
+while vision_module.running:
+    if input('[Info] pres q to exit') == 'q':
+        print('[INFO] ...')
+        vision_module.stop()
+
+wifi_module.stop()
+vision_module.join()
+wifi_module.join()
+
+print('END')
+
 # input()
 # from car_driver.apiconnection.soketclient import socket
 # lat = 1.3232

@@ -1,4 +1,5 @@
-import os
+from typing import Optional, Callable, Any, Iterable, Mapping
+
 from scapy.all import *
 from scapy.layers.dot11 import Dot11Beacon, Dot11, Dot11Elt, RadioTap
 from threading import Thread
@@ -36,9 +37,21 @@ class WifiTriangulation(Thread):
                  "9a:cf:31:12:42:69": [0.6, 0, 0],
                  "30:b5:c2:c8:58:83": [1.95878, 3.95878, 0],
                  "78:29:ed:83:f5:85": [1.8111, 3.95878, 0]}
-    interface = "wlx00c0ca665094"
+
+    def __init__(self, interface):
+        super().__init__()
+        self.interface = interface
 
     def run(self) -> None:
+        print("[INFO] Starting wifi module ...")
+
+        os.system("ifconfig wlx00c0ca665094 down")
+        time.sleep(1)
+        os.system("iwconfig wlx00c0ca665094 mode monitor")
+        time.sleep(1)
+        os.system("ifconfig wlx00c0ca665094 up")
+        time.sleep(3)
+
         # start the channel changer
         channel_changer = Thread(target=self.change_channel)
         channel_changer.daemon = True
@@ -50,7 +63,7 @@ class WifiTriangulation(Thread):
         channel_changr.start()
 
         self.print_all()
-        print("[INFO] Wifi triangulation finished")
+        print("[INFO] Wifi module finished")
 
     def generate_plot(self, points):
         xaxis = []
@@ -109,6 +122,8 @@ class WifiTriangulation(Thread):
 
             self.dict_wifi.clear()
 
+        print("[INFO] Stoping wifi module...")
+
     def change_channel(self):
         ch = 1
         while self.running:
@@ -121,14 +136,3 @@ class WifiTriangulation(Thread):
 
     def stop(self):
         self.running = False
-
-
-if __name__ == "__main__":
-    wifi = WifiTriangulation()
-    wifi.start()
-    print("starting")
-    time.sleep(35)
-    print("stop")
-    wifi.stop()
-    wifi.join()
-    print("end")
