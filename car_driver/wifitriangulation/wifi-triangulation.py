@@ -1,7 +1,4 @@
 import os
-# os.sys.path.append('/home/toni/Escritorio/wifi-Triangulation/venv/lib/python3.6/site-packages')
-# os.sys.path.append('/usr/lib/python3.6/lib-dynload')
-
 from scapy.all import *
 from scapy.layers.dot11 import Dot11Beacon, Dot11, Dot11Elt, RadioTap
 from threading import Thread
@@ -92,26 +89,14 @@ class WifiTriangulation(Thread):
             try:
                 dbm_signal = packet.dBm_AntSignal
                 distance = calc_distance(dbm_signal, frequency)
-            except:
-                dbm_signal = "N/A"
-                distance = 9999
-
-            self.dict_wifi[bssid] = [ssid, dbm_signal, channel, frequency, distance]
+            except Exception:
+                pass
+                # print("[Warning] dbm_signal not mesurable")
+            else:
+                self.dict_wifi[bssid] = [ssid, dbm_signal, channel, frequency, distance]
 
     def print_all(self):
-        # count = 0
         while self.running:
-            # os.system("clear")
-            # print(
-            #     "{:<20} {:<15} {:<10} {:<10} {:<10} {:<15}".format('MAC', 'ssid', 'dBm_Signal', 'Channel', 'frequency',
-            #                                                        'distance'))
-            # for k, v in self.dict_wifi.copy().items():
-            #     ssid, dBm_Signal, Channel, frequency, distance = v
-            #     print("{:<20} {:<15} {:<10} {:<10} {:<10} {:<15}".format(k, ssid, dBm_Signal, Channel, frequency,
-            #                                                              distance))
-            # time.sleep(0.5)
-            # count += 1
-            # if count % 20 == 0:
             time.sleep(8)
             for k in self.dict_poss.keys():
                 if k in self.dict_wifi:
@@ -128,7 +113,6 @@ class WifiTriangulation(Thread):
         ch = 1
         while self.running:
             os.system(f"iwconfig {self.interface} channel {ch}")
-            # switch channel from 1 to 14 each 0.5s
             ch = ch % 14 + 1
             time.sleep(0.5)
 
