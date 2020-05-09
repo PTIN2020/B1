@@ -4,11 +4,12 @@ import serial
 class ArduinoConnector:
 
     def __init__(self):
+        print("[INFO] Starting arduino connector module ...")
         self.actual_code = 0
         try:
             self.arduino = serial.Serial('/dev/ttyACM0', 9600)
         except serial.serialutil.SerialException:
-            print('[Error] connection to arduino')
+            print('[ERROR] connection to arduino')
             # exit(1)
 
     def send(self, code):
@@ -23,8 +24,9 @@ class ArduinoConnector:
                 print(2)
                 # self.arduino.write('f')  # Full
             else:
-                print('[Warning] Bad Code')
+                print('[WARNING] Bad Code')
             self.actual_code = code
 
     def close(self):
+        print("[INFO] Stopping arduino connector module ...")
         self.arduino.close()

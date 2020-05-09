@@ -1,14 +1,9 @@
-from typing import Optional, Callable, Any, Iterable, Mapping
-
 from scapy.all import *
 from scapy.layers.dot11 import Dot11Beacon, Dot11, Dot11Elt, RadioTap
 from threading import Thread
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
 import time
 import math
-from skimage import io
-
 
 # sudo ifconfig wlx00c0ca665094 down
 # sudo iwconfig wlx00c0ca665094 mode monitor
@@ -62,21 +57,23 @@ class WifiTriangulation(Thread):
     running = True
     dict_wifi = {}
     dict_poss = read_csv()
+    img = plt.imread("wifitriangulation/terminal2posicionament.png")
 
-    def __init__(self, interface):
+    def __init__(self, interface, socket):
         super().__init__()
         self.interface = interface
-        self.position = "16.0;15.2"
+        self.socket = socket
 
     def run(self) -> None:
         print("[INFO] Starting wifi module ...")
 
-        os.system("ifconfig wlx00c0ca665094 down")
-        time.sleep(1)
-        os.system("iwconfig wlx00c0ca665094 mode monitor")
-        time.sleep(1)
-        os.system("ifconfig wlx00c0ca665094 up")
-        time.sleep(3)
+        print("[WIFI_MODULE] Configuring wifi tu mode monitor ...")
+        # os.system("ifconfig "+self.interface+" down")
+        # time.sleep(1)
+        # os.system("iwconfig "+self.interface+" mode monitor")
+        # time.sleep(1)
+        # os.system("ifconfig "+self.interface+" up")
+        # time.sleep(3)
 
         # start the channel changer
         channel_changer = Thread(target=self.change_channel)
@@ -88,32 +85,40 @@ class WifiTriangulation(Thread):
         channel_changr.daemon = True
         channel_changr.start()
 
+        print("[WIFI_MODULE] Starting triangulation ...")
         self.triangulating()
+
+        os.system("ifconfig " + self.interface + " down")
+        os.system("ifconfig " + self.interface + " up")
         print("[INFO] Wifi module finished")
 
-    def generate_plot(self, dict_poss):
-        x_axis = []
-        y_axis = []
-        for (x, y, signal) in dict_poss.values():
-            if signal >= 0:
-                x_axis.append(x)
-                y_axis.append(y)
+    def triangulating(self):
+        time.sleep(8)
+        while self.running:
+            for k in self.dict_poss.keys():
+                if k in self.dict_wifi:
+                    self.dict_poss[k][2] = pow((75 + self.dict_wifi[k][1]), 3)
+                else:
+                    self.dict_poss[k][2] = 0
+            self.dict_poss["cotxe"] = triangulate(self.dict_poss)
 
-        color = list('Blue' for i in range(len(x_axis) - 1))
-        color.append('Green')
+            self.generate_plot()
 
-        maze = io.imread('wifitriangulation/terminal2posicionament.png')
-        fig, ax = plt.subplots(1)
-        ax.imshow(maze)
+            self.socket.update_position(self.dict_poss["cotxe"][0], self.dict_poss["cotxe"][1])
 
-        plt.scatter(x_axis, y_axis, color=color)
+            self.dict_wifi.clear()
+            time.sleep(8)
+        print("[WIFI_MODULE] Stoping wifi module...")
 
-        for i in range(len(x_axis) - 1):
-            plt.plot([x_axis[i], x_axis[-1]], [y_axis[i], y_axis[-1]], 'r-')
+    def change_channel(self):
+        ch = 1
+        while self.running:
+            os.system(f"iwconfig {self.interface} channel {ch}")
+            ch = ch % 14 + 1
+            time.sleep(0.5)
 
-        plt.draw()
-        plt.pause(0.001)
-        plt.clf()
+    def snif(self):
+        sniff(prn=self.callback, iface=self.interface)
 
     def callback(self, packet):
         if packet.haslayer(Dot11Beacon):
@@ -127,33 +132,30 @@ class WifiTriangulation(Thread):
             except Exception:
                 dbm_signal = -75
                 distance = 9999
-                # print("[Warning] dbm_signal not mesurable")
             self.dict_wifi[bssid] = [ssid, dbm_signal, channel, frequency, distance]
 
-    def triangulating(self):
-        while self.running:
-            time.sleep(8)
-            for k in self.dict_poss.keys():
-                if k in self.dict_wifi:
-                    self.dict_poss[k][2] = pow((75 + self.dict_wifi[k][1]), 3)
-                else:
-                    self.dict_poss[k][2] = 0
-            self.dict_poss["cotxe"] = triangulate(self.dict_poss)
-            self.generate_plot(self.dict_poss)
+    def generate_plot(self):
+        x_axis = []
+        y_axis = []
+        for (x, y, signal) in self.dict_poss.values():
+            if signal > 0:
+                x_axis.append(x)
+                y_axis.append(y)
 
-            self.dict_wifi.clear()
+        color = list('Blue' for i in range(len(x_axis) - 1))
+        color.append('Green')
 
-        print("[INFO] Stoping wifi module...")
+        plt.imshow(self.img)
 
-    def change_channel(self):
-        ch = 1
-        while self.running:
-            os.system(f"iwconfig {self.interface} channel {ch}")
-            ch = ch % 14 + 1
-            time.sleep(0.5)
+        plt.plot(x_axis[-1], y_axis[-1], 'go')
+        # plt.scatter(x_axis, y_axis, color=color)
 
-    def snif(self):
-        sniff(prn=self.callback, iface=self.interface)
+        for i in range(len(x_axis) - 1):
+            plt.plot([x_axis[i], x_axis[-1]], [y_axis[i], y_axis[-1]], 'r-')
 
-    def stop(self):
+        plt.draw()
+        plt.pause(0.001)
+        plt.clf()
+
+    def finish(self):
         self.running = False

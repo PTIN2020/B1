@@ -9,17 +9,18 @@ from threading import Thread
 
 class CarVision(Thread):
     running = False
+    is_search_qr = False
+    qr_search = "none"
+    stop_car = False
 
-    def __init__(self, arduino_module):
+    def __init__(self, arduino_module, socket):
         super().__init__()
 
         self.arduino_module = arduino_module
+        self.socket = socket
 
         print("[INFO] loading AI model...")
         self.net = cv2.dnn.readNetFromCaffe('carvision/model/Mode.prototxt.txt', 'carvision/model/Mode.caffemodel')
-
-        self.stat = 0
-        self.code = 0
 
     def run(self):
         print("[INFO] Starting vision module...")
@@ -33,17 +34,16 @@ class CarVision(Thread):
             frame = cap.read()
             frame = imutils.resize(frame, width=600)
 
-            self.check_for_code(frame)
-            self.check_for_object(frame)
-
-            self.arduino_module.send(self.stat)
+            if not self.stop_car:
+                self.check_for_object(frame)
+                if self.is_search_qr:
+                    self.check_for_code(frame)
 
             cv2.imshow("Frame", frame)
             if cv2.waitKey(1) == ord("q"):
                 break
 
-
-        print("[INFO] Stoping vision module...")
+        print("[INFO] Stopping vision module...")
         cap.stop()
         cv2.destroyAllWindows()
         self.running = False
@@ -56,7 +56,7 @@ class CarVision(Thread):
 
         (h, w) = frame.shape[:2]
 
-        self.stat = 2
+        stat = 2
         color = (255, 0, 0)
         for i in np.arange(0, detections.shape[2]):
             confidence = detections[0, 0, i, 2]
@@ -65,22 +65,34 @@ class CarVision(Thread):
                 (startX, startY, endX, endY) = box.astype("int")
                 if (endY - startY) / h < 0.95 and (endX - startX) / w < 0.95:
                     if endY / h > 0.6 and (startX / w < 0.8 and endX / w > 0.2):
-                        self.stat = 0
+                        stat = 0
                         color = (0, 0, 255)
-                    elif endY / h > 0.4:
-                        if self.stat > 1:
-                            self.stat = 1
-                            color = (0, 255, 255)
+                    elif endY / h > 0.4 and stat > 1:
+                        stat = 1
+                        color = (0, 255, 255)
 
                     cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+        if not self.stop_car:
+            self.arduino_module.send(stat)
 
     def check_for_code(self, frame):
         codes = pyzbar.decode(frame)
-        self.code = 0
         for code in codes:
-            self.code = code.data.decode("utf-8")
+            if self.qr_search == code.data.decode("utf-8"):
+                self.is_search_qr = False
+                self.stop_car = True
+                self.arduino_module.send(0)
+                self.socket.send_notification(self.qr_search)
+                self.qr_search = "none"
             (x, y, w, h) = code.rect
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-    def stop(self):
+    def set_qr_search(self, qr):
+        self.qr_search = qr
+        self.is_search_qr = True
+
+    def set_stop_car(self, is_stop):
+        self.stop_car = is_stop
+
+    def finish(self):
         self.running = False
