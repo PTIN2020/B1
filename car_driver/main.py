@@ -55,14 +55,18 @@ wifi_module.start()
 arduino_module = ArduinoConnector()
 
 vision_module = CarVision(arduino_module, socket)
-vision_module.setDaemon(True)
 vision_module.start()
 
-stop = 0
+
 while vision_module.running:
-    if input('[Info] pres q to exit') == 'q':
+    option = input('[Info] pres q to exit')
+    if option == 'q':
         print('[INFO] ...')
         vision_module.finish()
+    elif option == 'r':
+        vision_module.set_qr_search("123456")
+    elif option == 's':
+        vision_module.set_stop_car(False)
 
 wifi_module.finish()
 

@@ -8,7 +8,6 @@ from threading import Thread
 
 
 class CarVision(Thread):
-    running = False
     is_search_qr = False
     qr_search = "none"
     stop_car = False
@@ -18,6 +17,8 @@ class CarVision(Thread):
 
         self.arduino_module = arduino_module
         self.socket = socket
+
+        self.running = True
 
         print("[INFO] loading AI model...")
         self.net = cv2.dnn.readNetFromCaffe('carvision/model/Mode.prototxt.txt', 'carvision/model/Mode.caffemodel')
@@ -84,10 +85,13 @@ class CarVision(Thread):
                 self.arduino_module.send(0)
                 self.socket.send_notification(self.qr_search)
                 self.qr_search = "none"
+
+                print('[VISION_MODULE] ', self.qr_search, ' code found...')
             (x, y, w, h) = code.rect
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     def set_qr_search(self, qr):
+        print('[VISION_MODULE] Searching ', qr, ' code...')
         self.qr_search = qr
         self.is_search_qr = True
 

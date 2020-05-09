@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import time
 import math
 
+
 # sudo ifconfig wlx00c0ca665094 down
 # sudo iwconfig wlx00c0ca665094 mode monitor
 # sudo ifconfig wlx00c0ca665094 up
@@ -64,7 +65,7 @@ class WifiTriangulation(Thread):
         self.interface = interface
         self.socket = socket
 
-    def run(self) -> None:
+    def run(self):
         print("[INFO] Starting wifi module ...")
 
         print("[WIFI_MODULE] Configuring wifi tu mode monitor ...")
