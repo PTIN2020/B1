@@ -1,11 +1,11 @@
 from carvision.qr_object_detection import CarVision
-from wifitriangulation.wifi_triangulation import WifiTriangulation
+# from wifitriangulation.wifi_triangulation import WifiTriangulation
 from driverconnection.arduino_connector import ArduinoConnector
 
 # QT_X11_NO_MITSHM=1 python main.py
 
-wifi_module = WifiTriangulation("wlx00c0ca665094")
-wifi_module.start()
+# wifi_module = WifiTriangulation("wlx00c0ca665094")
+# wifi_module.start()
 
 arduino_module = ArduinoConnector()
 
@@ -18,9 +18,9 @@ while vision_module.running:
         print('[INFO] ...')
         vision_module.stop()
 
-wifi_module.stop()
+# wifi_module.stop()
 vision_module.join()
-wifi_module.join()
+# wifi_module.join()
 
 print('END')
 
