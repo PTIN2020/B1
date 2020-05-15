@@ -2,7 +2,7 @@ const express = require('express');
 
 var server = require('http').Server(express);
 var io = require('socket.io')(server);
-var cotxes = {};
+global.cotxes = {};
 
 server.listen(3003, function() {
     console.log('WebSocket corriendo en http://localhost:3003');
@@ -11,56 +11,47 @@ server.listen(3003, function() {
 
 io.on('connection', function(socket) {
     console.log('Un cliente se ha conectado');
+    socket.emit('message', "Benvingut al WebSocket");
 
     // missatge inicial on el cotche et comunica el seu id
     socket.on('id', (id) => {
         console.log('id del cotche: ' + id);
-
-        //	Es comproba que el cotche existeix en la base de dades. Si no existei es tanca la connexió
-        //	amb el socket i si existeix es guarda en el diccionari amb el seu id
-        if (id !== '123654'){
-            socket.disconnect()
-        } else {
-            cotxes[socket] = id;
-        }
+        socket.id = id;
+        cotxes[id] = socket;
     });
 
     // missage que reps del posicionament individual de cada cotche
     socket.on('position', (lat,lon) => {
-        console.log('position del cotxe '+cotxes[socket]+': ' + lat + " - " + lon);
-        //	aqui s'actialitza la posició
+        console.log('position del cotxe '+socket.id+': ' + lat + " - " + lon);
     });
 
     // missage que reps del status individual de cada cotche
     socket.on('status', (msg) => {
-        console.log('status del cotxe '+cotxes[socket]+': ' + msg);
-        if (msg === 'libre' || msg === 'ocupado' || msg === 'cargando' || msg === 'reparando') {
-        //    Aqui s'actualitza el status
+        const status = Number(msg);
+        if (status <= 3 && status >= 0 ) {
+            console.log('status del cotxe '+socket.id+': ' + status);
         }else {
             console.log('Bad status');
             socket.emit('bad_status', "El status no es correcte");
         }
     });
 
+    socket.on('notification', (msg) => {
+        if (msg === 'llest' || msg === 'anant' || msg === 'error') {
+            console.log('notificacio del cotxe '+socket.id+': ' + msg);
+        }else {
+            console.log('Bad notify');
+            socket.emit('bad_notify', "La notificació no es correcte");
+        }
+    });
     // quan un cotxe es desconnecta s'elimina de la llista
     socket.on('disconnect', (reason) => {
-        console.log('Cotxe '+cotxes[socket]+' desconnectat');
-        delete cotxes[socket]
+        console.log('Cotxe '+socket.id+' desconnectat');
+        delete cotxes[socket.id]
     });
 
-    socket.emit('message', "missatge de benvinguda"); // ejemplo de mensaje normal, no sirve para nada
-    socket.emit('notification', "rebut"); // ejemplo de notidicación a un solo coche
 });
 
-io.emit('notification', "Id_aturada_inifial:Id_aturada_final"); //broadcast de notificación
 
-
-function findSocketFromId(id) {
-    for(var client in cotxes) {
-        if (cotxes[client] === id ){
-            return client
-        }
-    }
-    return null
-}
-
+// cotxes["12341"].emit('message', "Benvingut al WebSocket"); // ejemplo de mensaje normal, no sirve para nada
+// cotxes["12341"].emit('notification', "Id_aturada_inicial:Id_aturada_final"); // ejemplo de notidicación a un solo coche

@@ -10,6 +10,7 @@ from threading import Thread
 class CarVision(Thread):
     is_search_qr = False
     qr_search = "none"
+    next_qr_search = ""
     stop_car = False
 
     def __init__(self, arduino_module, socket):
@@ -91,9 +92,17 @@ class CarVision(Thread):
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     def set_qr_search(self, qr):
-        print('[VISION_MODULE] Searching ', qr, ' code...')
-        self.qr_search = qr
+        print('[VISION_MODULE] Searching ', qr.split(':')[0], ' code...')
+        self.qr_search = qr.split(':')[0]
+        self.next_qr_search = qr.split(':')[1]
         self.is_search_qr = True
+
+    def find_next_qr_search(self):
+        print('[VISION_MODULE] Searching ', self.next_qr_search, ' code...')
+        self.qr_search = self.qr_search
+        self.next_qr_search = ""
+        self.is_search_qr = True
+        self.stop_car = False
 
     def set_stop_car(self, is_stop):
         self.stop_car = is_stop

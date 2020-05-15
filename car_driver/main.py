@@ -64,7 +64,7 @@ while vision_module.running:
         print('[INFO] ...')
         vision_module.finish()
     elif option == 'r':
-        vision_module.set_qr_search("123456")
+        vision_module.set_qr_search("12342:12341")
     elif option == 's':
         vision_module.set_stop_car(False)
 
