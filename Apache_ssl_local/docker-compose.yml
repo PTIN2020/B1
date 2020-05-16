@@ -1,0 +1,11 @@
+version: '3'
+services:
+    webserver:
+        build: ./Webserver/
+        ports:
+            - "8080:80"
+            - "1443:443"
+        volumes: 
+            #Volumes per a les configuracions de apache i per als arxius respectivament
+            - ./Webserver/Apache_Conf:/etc/apache2/sites-avaliable
+            - ./Webserver/Apache_Files:/var/www
