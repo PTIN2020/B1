@@ -55,11 +55,12 @@ void loop () {
          digitalWrite(IN4, LOW);
          analogWrite(ENB,0);
          analogWrite(ENA,0);
-      } else if (c == 'AD') { //Acelera derecha
+      }
+     /*else if (c == 'AD') { //Acelera derecha
          analogWrite(ENB,105);
       } else if (c == 'AI') { //Acelera izquierda
          analogWrite(ENA,105);
-      }
+      }*/
    }
    /*
    //COntrol de seguimiento de linea mediante sensores laser
