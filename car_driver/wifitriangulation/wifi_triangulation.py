@@ -6,27 +6,6 @@ import time
 import math
 
 
-# sudo ifconfig wlx00c0ca665094 down
-# sudo iwconfig wlx00c0ca665094 mode monitor
-# sudo ifconfig wlx00c0ca665094 up
-
-# {"b2:75:41:37:32:db": [1.95878, 3.8125, 0],
-#  "9a:cf:31:12:42:69": [0.6, 0, 0],
-#  "30:b5:c2:c8:58:83": [1.95878, 3.95878, 0],
-#  "78:29:ed:83:f5:85": [1.8111, 3.95878, 0]}
-
-# maze = io.imread('wifitriangulation/terminal2posicionament.png')
-#
-# patches = []
-# for (x, y, signal) in dict_poss.values():
-#     patches.append(Circle((int(x), int(y)), radius=5, color='red'))
-#
-# fig, ax = plt.subplots(1)
-# ax.imshow(maze)
-# for p in patches:
-#     ax.add_patch(p)
-# plt.show()
-
 def triangulate(points):
     ws = sum((p[2]) for p in points.values())
     if ws == 0:
